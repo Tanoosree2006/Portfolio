@@ -8,7 +8,7 @@
 :root {
   --bg-gradient: linear-gradient(90deg, #cffafe, #fde7c8 60%, #fed6e3);
   --text-color: #212529;
-  --text-secondary: #555;
+  --text-secondary: black;
   --accent-color: #0d8bff;
   --accent-hover: #0073e6;
   --card-bg: rgba(255, 255, 255, 0.6);
@@ -62,7 +62,7 @@ header {
 
 header .logo {
   font-weight: bold;
-  color: var(--text-color);
+  color: var(text-secondary);
   font-size: 1.8rem;
 }
 
@@ -122,7 +122,7 @@ header ul li a.active {
 
 .hero h1 {
   font-size: 3.2rem;
-  color: var(--text-color);
+  color: black;
   line-height: 1.2;
 }
 
@@ -265,43 +265,135 @@ section h2::after {
 }
 
  /* Education */
-        #education .education-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
 
-        #education .education-item {
-            background: var(--card-bg);
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px var(--card-shadow);
-            text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.5);
-        }
+ /* --- Education Timeline Section --- */
+.timeline-container {
+    position: relative;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 0;
+}
 
-        #education .education-item:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 8px 25px var(--card-hover-shadow);
-        }
-        #education .education-item i {
-            font-size: 2.8rem;
-            color: var(--accent-color);
-            margin-bottom: 15px;
-        }
-        #education .education-item h3 {
-            font-size: 1.5rem;
-            color: var(--accent-color);
-        }
-        #education .education-item ul {
-            list-style: none;
-            padding: 0;
-            color: var(--text-secondary);
-        }
+/* The Central Line */
+.timeline-container::after {
+    content: '';
+    position: absolute;
+    width: 4px;
+    background-color: var(--accent-color);
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    margin-left: -2px;
+    border-radius: 2px;
+}
 
+/* Container for each timeline item */
+.timeline-item {
+    padding: 10px 40px;
+    position: relative;
+    width: 50%;
+}
+
+/* The Connector Dot on the timeline */
+.timeline-item::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    border: 4px solid var(--accent-color);
+    border-radius: 50%;
+    top: 30px; /* Adjust to align with your content */
+    z-index: 1;
+}
+
+/* Position items on the LEFT */
+.timeline-item:nth-child(odd) {
+    left: 0;
+}
+
+/* Position items on the RIGHT */
+.timeline-item:nth-child(even) {
+    left: 50%;
+}
+
+/* Position the connector dot for LEFT items */
+.timeline-item:nth-child(odd)::after {
+    right: -10px;
+}
+
+/* Position the connector dot for RIGHT items */
+.timeline-item:nth-child(even)::after {
+    left: -10px;
+}
+
+/* The content card */
+.timeline-content {
+    padding: 20px 30px;
+    background: var(--card-bg);
+    border-radius: 12px;
+    box-shadow: 0 4px 15px var(--card-shadow);
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.timeline-content:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px var(--card-hover-shadow);
+}
+
+.timeline-content h3 {
+    font-size: 1.5rem;
+    color: var(--accent-color);
+    margin-top: 0;
+}
+
+.timeline-content i {
+    font-size: 2.5rem;
+    color: var(--accent-color);
+    float: right;
+    margin-left: 15px;
+}
+
+.timeline-date {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    display: block;
+    margin-bottom: 10px;
+}
+
+.timeline-content ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 10px;
+}
+
+/* --- RESPONSIVE DESIGN for Timeline --- */
+@media (max-width: 768px) {
+    /* Hide the central line on mobile */
+    .timeline-container::after {
+        display: none;
+    }
+
+    /* Make all items full-width and remove positioning */
+    .timeline-item {
+        width: 100%;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    
+    .timeline-item:nth-child(odd),
+    .timeline-item:nth-child(even) {
+        left: 0;
+        margin-bottom: 20px; /* Add space between stacked cards */
+    }
+
+    /* Hide the connector dots */
+    .timeline-item::after {
+        display: none;
+    }
+}
 
 /* ------------------- Skills Section ------------------- */
 #skills {
@@ -368,32 +460,26 @@ section h2::after {
 }
 
 /* Certifications & Achievements Section ------------------- */ 
-.section-subheading {
-  text-align: center;
-  font-size: 1.5rem;
-  font-weight: 500;
-  color: var(--text-secondary);
-  margin-top: 40px;
-  margin-bottom: 25px;
-}
 
-.certifications-container,
-.achievements-container {
+/* --- Unified Certifications Section --- */ 
+.certifications-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 25px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
   max-width: 1200px;
   margin: 0 auto;
 }
 
+/* Base Card Styling for ALL cards */
 .cert-card {
   background: var(--card-bg);
-  padding: 25px;
   border-radius: 12px;
   box-shadow: 0 4px 15px var(--card-shadow);
-  text-align: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   border: 1px solid rgba(255, 255, 255, 0.5);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .cert-card:hover {
@@ -401,24 +487,61 @@ section h2::after {
   box-shadow: 0 8px 25px var(--card-hover-shadow);
 }
 
-.cert-card .cert-icon i {
-  font-size: 2.8rem;
-  color: var(--accent-color);
-  margin-bottom: 15px;
+/* --- Styles for cards WITH images --- */
+.card-image-container {
+  height: 160px;
+  overflow: hidden;
+  background-color: #e0e0e0;
 }
 
-.cert-card h3 {
+.cert-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.cert-card:hover img {
+  transform: scale(1.1);
+}
+
+.card-content {
+  padding: 20px;
+  text-align: center;
+  flex-grow: 1;
+}
+
+.card-content h3 {
   font-size: 1.2rem;
+  margin-top: 0;
   margin-bottom: 8px;
   color: var(--text-color);
 }
 
-.cert-card .issuer {
+.card-content .issuer {
   font-size: 1rem;
   color: var(--text-secondary);
   font-weight: 500;
 }
 
+/* --- Specific styles for ICON-ONLY cards --- */
+.cert-card.icon-card {
+    padding: 25px;
+    justify-content: center;
+    align-items: center;
+}
+
+.icon-card .cert-icon {
+    font-size: 2.8rem;
+    color: var(--accent-color);
+    margin-bottom: 15px;
+}
+
+.icon-card h3 {
+    font-size: 1.2rem;
+    color: var(--text-color);
+}
 
 /* ------------------- Experience & Projects Sections ------------------- */
 .experience-timeline,
@@ -475,7 +598,7 @@ section h2::after {
 
 .projects-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
     gap: 30px;
 }
 
